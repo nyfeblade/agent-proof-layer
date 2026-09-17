@@ -36,10 +36,16 @@
   ],
   "result": {
     "observed": {
-      "metric": "pending_spike_measurement"
+      "metric": "demo_reject",
+      "value": "REJECTED",
+      "measured_exit": 1,
+      "expected_exit": 0,
+      "npm_script_wall_ms": 496,
+      "prove_wall_ms": 25,
+      "unit": "ms"
     },
-    "logs_uri": "evidence/runs/",
-    "wall_ms": null
+    "logs_uri": "evidence/exp-1-agent-proof-layer/spike-run/",
+    "wall_ms": 496
   },
   "cost": {
     "ca_minutes": null,
@@ -48,19 +54,19 @@
     "quota_events": ["ok"]
   },
   "provenance": {
-    "commit": "pending",
+    "commit": "e5ea524b1dfbea92cc513555487c30087daed677",
     "cloud_agent_id": "bc-0b9eff9a-87ed-5245-acbc-4d74b3fdcd66",
-    "started_at": "2026-09-17T18:25:00.000Z",
-    "ended_at": null,
+    "started_at": "2026-09-17T18:27:22.709Z",
+    "ended_at": "2026-09-17T18:27:22.734Z",
     "instruments": ["apl prove", "npm run demo:reject"]
   },
   "verdict": null,
   "verdict_by": "Eng Proof",
-  "measured": "Authoring CloudAgent must not set verdict. Re-run: npm run demo:reject",
+  "measured": "Spike CA ran npm run demo:reject on e5ea524: runner_result=REJECTED, measured_exit=1, expected_exit=0, npm wall_ms=496. Not a verdict.",
   "next": "hold",
   "next_note": "Awaiting Eng Proof independent_verdict after stranger re-run.",
   "claim_hygiene": {
-    "runner_result": "measured by apl; not a verdict",
+    "runner_result": "verified",
     "verdict": "never_validated",
     "demo_reject_prediction": "hypothesis"
   }
