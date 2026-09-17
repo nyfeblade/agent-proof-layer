@@ -1,0 +1,13 @@
+{
+  "experiment_id": "exp-1-planted-false",
+  "title": "Planted-false: tests passed",
+  "hypothesis": "An agent claimed tests passed.",
+  "commands": [
+    {
+      "run": "node fixtures/failing.js",
+      "cwd": ".",
+      "expect_exit": 0,
+      "timeout_s": 30
+    }
+  ]
+}

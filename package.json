@@ -1,0 +1,15 @@
+{
+  "name": "agent-proof-layer",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Minimal claim runner: execute declared commands and emit VERIFIED | REJECTED | INCONCLUSIVE with measured evidence.",
+  "bin": {
+    "apl": "./bin/apl.js"
+  },
+  "scripts": {
+    "demo:reject": "node ./bin/apl.js prove claims/planted-false.json --require-result REJECTED"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

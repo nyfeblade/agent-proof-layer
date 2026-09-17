@@ -1,0 +1,67 @@
+{
+  "experiment_id": "exp-1-agent-proof-layer",
+  "title": "Agent Proof Layer planted-false reject",
+  "owner_seat": "Eng Lead",
+  "horizon": "near",
+  "hypothesis": "A tiny claim runner that executes declared commands can REJECT planted-false “tests passed” agent claims with measured evidence, portable beside Cursor/Claude/Grok.",
+  "prediction": "demo:reject emits REJECTED with non-zero measured exit in <2 min on cold checkout.",
+  "baseline": {
+    "description": "Agent prose / CI narrative; no portable stranger command that rejects planted-false in <2 min in this vehicle.",
+    "commands": [],
+    "measured": {
+      "metric": "portable_reject_demo",
+      "value": false,
+      "unit": "exists",
+      "at": "2026-09-17T00:00:00.000Z"
+    }
+  },
+  "metric": "demo:reject prints REJECTED with measured non-zero exit and log path",
+  "success_threshold": "REJECTED + measured_exit != 0 + wall_ms < 120000 on clean checkout",
+  "kill_threshold": "Cannot REJECT planted-false with measured log in <2 min",
+  "cheapest_experiment": "Fixture command exits 1; claim expects 0; runner must REJECT.",
+  "timebox_hours": 8,
+  "setup": {
+    "repo": "https://github.com/nyfeblade/agent-proof-layer",
+    "branch": "cursor/exp-1-agent-proof-layer-cd66",
+    "env": "CloudAgent default + Node 18+",
+    "harness_disclosure": "model=cursor-grok-4.6-high-fast; harness=CloudAgent + local node apl prove; no retries on ResourceExhausted"
+  },
+  "command": [
+    {
+      "run": "npm run demo:reject",
+      "cwd": ".",
+      "expect_exit": 0,
+      "timeout_s": 120
+    }
+  ],
+  "result": {
+    "observed": {
+      "metric": "pending_spike_measurement"
+    },
+    "logs_uri": "evidence/runs/",
+    "wall_ms": null
+  },
+  "cost": {
+    "ca_minutes": null,
+    "tokens_est": null,
+    "dollars_est": null,
+    "quota_events": ["ok"]
+  },
+  "provenance": {
+    "commit": "pending",
+    "cloud_agent_id": "bc-0b9eff9a-87ed-5245-acbc-4d74b3fdcd66",
+    "started_at": "2026-09-17T18:25:00.000Z",
+    "ended_at": null,
+    "instruments": ["apl prove", "npm run demo:reject"]
+  },
+  "verdict": null,
+  "verdict_by": "Eng Proof",
+  "measured": "Authoring CloudAgent must not set verdict. Re-run: npm run demo:reject",
+  "next": "hold",
+  "next_note": "Awaiting Eng Proof independent_verdict after stranger re-run.",
+  "claim_hygiene": {
+    "runner_result": "measured by apl; not a verdict",
+    "verdict": "never_validated",
+    "demo_reject_prediction": "hypothesis"
+  }
+}
