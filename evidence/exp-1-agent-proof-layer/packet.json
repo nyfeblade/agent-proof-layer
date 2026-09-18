@@ -1,0 +1,73 @@
+{
+  "experiment_id": "exp-1-agent-proof-layer",
+  "title": "Agent Proof Layer planted-false reject",
+  "owner_seat": "Eng Lead",
+  "horizon": "near",
+  "hypothesis": "A tiny claim runner that executes declared commands can REJECT planted-false “tests passed” agent claims with measured evidence, portable beside Cursor/Claude/Grok.",
+  "prediction": "demo:reject emits REJECTED with non-zero measured exit in <2 min on cold checkout.",
+  "baseline": {
+    "description": "Agent prose / CI narrative; no portable stranger command that rejects planted-false in <2 min in this vehicle.",
+    "commands": [],
+    "measured": {
+      "metric": "portable_reject_demo",
+      "value": false,
+      "unit": "exists",
+      "at": "2026-09-17T00:00:00.000Z"
+    }
+  },
+  "metric": "demo:reject prints REJECTED with measured non-zero exit and log path",
+  "success_threshold": "REJECTED + measured_exit != 0 + wall_ms < 120000 on clean checkout",
+  "kill_threshold": "Cannot REJECT planted-false with measured log in <2 min",
+  "cheapest_experiment": "Fixture command exits 1; claim expects 0; runner must REJECT.",
+  "timebox_hours": 8,
+  "setup": {
+    "repo": "https://github.com/nyfeblade/agent-proof-layer",
+    "branch": "cursor/exp-1-agent-proof-layer-cd66",
+    "env": "CloudAgent default + Node 18+",
+    "harness_disclosure": "model=cursor-grok-4.6-high-fast; harness=CloudAgent + local node apl prove; no retries on ResourceExhausted"
+  },
+  "command": [
+    {
+      "run": "npm run demo:reject",
+      "cwd": ".",
+      "expect_exit": 0,
+      "timeout_s": 120
+    }
+  ],
+  "result": {
+    "observed": {
+      "metric": "demo_reject",
+      "value": "REJECTED",
+      "measured_exit": 1,
+      "expected_exit": 0,
+      "npm_script_wall_ms": 496,
+      "prove_wall_ms": 25,
+      "unit": "ms"
+    },
+    "logs_uri": "evidence/exp-1-agent-proof-layer/spike-run/",
+    "wall_ms": 496
+  },
+  "cost": {
+    "ca_minutes": null,
+    "tokens_est": null,
+    "dollars_est": null,
+    "quota_events": ["ok"]
+  },
+  "provenance": {
+    "commit": "e5ea524b1dfbea92cc513555487c30087daed677",
+    "cloud_agent_id": "bc-0b9eff9a-87ed-5245-acbc-4d74b3fdcd66",
+    "started_at": "2026-09-17T18:27:22.709Z",
+    "ended_at": "2026-09-17T18:27:22.734Z",
+    "instruments": ["apl prove", "npm run demo:reject"]
+  },
+  "verdict": null,
+  "verdict_by": "Eng Proof",
+  "measured": "Spike CA ran npm run demo:reject on e5ea524: runner_result=REJECTED, measured_exit=1, expected_exit=0, npm wall_ms=496. Not a verdict.",
+  "next": "hold",
+  "next_note": "Awaiting Eng Proof independent_verdict after stranger re-run.",
+  "claim_hygiene": {
+    "runner_result": "verified",
+    "verdict": "never_validated",
+    "demo_reject_prediction": "hypothesis"
+  }
+}

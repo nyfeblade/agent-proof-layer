@@ -1,0 +1,50 @@
+{
+  "experiment_id": "exp-1-planted-false",
+  "title": "Planted-false: tests passed",
+  "hypothesis": "An agent claimed tests passed.",
+  "command": [
+    {
+      "run": "node fixtures/failing.js",
+      "cwd": ".",
+      "expect_exit": 0,
+      "timeout_s": 30
+    }
+  ],
+  "result": {
+    "observed": {
+      "runner_result": "REJECTED",
+      "measured_exits": [
+        1
+      ]
+    },
+    "logs_uri": "evidence/runs/exp-1-planted-false/2026-09-17T18-27-22-709Z",
+    "wall_ms": 25
+  },
+  "provenance": {
+    "commit": "e5ea524b1dfbea92cc513555487c30087daed677",
+    "cloud_agent_id": null,
+    "started_at": "2026-09-17T18:27:22.709Z",
+    "ended_at": "2026-09-17T18:27:22.734Z",
+    "instruments": [
+      "apl prove"
+    ]
+  },
+  "runner_result": "REJECTED",
+  "verdict": null,
+  "verdict_by": "Eng Proof",
+  "measured": "node fixtures/failing.js: expected 0, measured 1",
+  "commands": [
+    {
+      "run": "node fixtures/failing.js",
+      "cwd": ".",
+      "expect_exit": 0,
+      "timeout_s": 30,
+      "measured_exit": 1,
+      "timed_out": false,
+      "spawn_error": null,
+      "wall_ms": 22,
+      "log_path": "evidence/runs/exp-1-planted-false/2026-09-17T18-27-22-709Z/cmd-0.log"
+    }
+  ],
+  "claim_path": "claims/planted-false.json"
+}
