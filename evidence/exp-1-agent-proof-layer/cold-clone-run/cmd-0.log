@@ -1,0 +1,13 @@
+run: node fixtures/failing.js
+cwd: .
+expect_exit: 0
+measured_exit: 1
+timed_out: false
+spawn_error: 
+wall_ms: 33
+
+----- stdout -----
+tests passed
+
+----- stderr -----
+
