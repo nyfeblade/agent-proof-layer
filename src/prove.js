@@ -10,7 +10,26 @@ const RESULT = {
   INCONCLUSIVE: "INCONCLUSIVE",
 };
 
-async function proveClaim({ claimPath, cwd }) {
+const PACKET_SCHEMA_VERSION = 1;
+
+// Fields Eng Proof needs to re-run a packet without asking the author anything.
+const REQUIRED_PACKET_FIELDS = [
+  "schema_version",
+  "experiment_id",
+  "title",
+  "claim_path",
+  "rerun.command",
+  "runner_result",
+  "result.logs_uri",
+  "result.wall_ms",
+  "provenance.commit",
+  "provenance.started_at",
+  "provenance.ended_at",
+];
+
+const REQUIRED_COMMAND_FIELDS = ["run", "cwd", "expect_exit", "log_path", "wall_ms"];
+
+async function proveClaim({ claimPath, cwd, invocation }) {
   const startedAt = new Date();
   const startedMs = Date.now();
   const absClaim = path.resolve(cwd, claimPath);
@@ -39,9 +58,11 @@ async function proveClaim({ claimPath, cwd }) {
   const runnerResult = decideResult(commandResults);
   const endedAt = new Date();
   const packet = {
+    schema_version: PACKET_SCHEMA_VERSION,
     experiment_id: claim.experiment_id,
     title: claim.title,
     hypothesis: claim.hypothesis || null,
+    rerun: describeRerun(invocation, rel(cwd, absClaim)),
     command: claim.commands,
     result: {
       observed: {
@@ -57,6 +78,8 @@ async function proveClaim({ claimPath, cwd }) {
       started_at: startedAt.toISOString(),
       ended_at: endedAt.toISOString(),
       instruments: ["apl prove"],
+      node_version: process.version,
+      platform: process.platform,
     },
     runner_result: runnerResult,
     verdict: null,
@@ -65,6 +88,8 @@ async function proveClaim({ claimPath, cwd }) {
     commands: commandResults,
     claim_path: rel(cwd, absClaim),
   };
+
+  assertPacketComplete(packet);
 
   const packetPath = path.join(runDir, "packet.json");
   fs.writeFileSync(packetPath, `${JSON.stringify(packet, null, 2)}\n`);
@@ -213,6 +238,51 @@ function summarizeMeasured(commands) {
         `${command.run}: expected ${command.expect_exit}, measured ${command.measured_exit}`
     )
     .join("; ");
+}
+
+// `argv` is what was actually invoked; `command` is the portable equivalent a
+// stranger can paste from a cold clone. `npm_script` is set when run via npm.
+function describeRerun(invocation, claimPathRel) {
+  const source = invocation || {};
+  const parts = ["node", "./bin/apl.js", "prove", claimPathRel];
+  if (source.require_result) {
+    parts.push("--require-result", source.require_result);
+  }
+  return {
+    command: parts.join(" "),
+    npm_script: source.npm_script || null,
+    cwd: ".",
+    argv: Array.isArray(source.argv) ? source.argv : [],
+  };
+}
+
+function assertPacketComplete(packet) {
+  const missing = REQUIRED_PACKET_FIELDS.filter((field) => isEmpty(dig(packet, field)));
+  if (!Array.isArray(packet.commands) || packet.commands.length === 0) {
+    missing.push("commands");
+  } else {
+    packet.commands.forEach((command, index) => {
+      for (const field of REQUIRED_COMMAND_FIELDS) {
+        if (isEmpty(command[field])) {
+          missing.push(`commands[${index}].${field}`);
+        }
+      }
+      if (!("measured_exit" in command)) {
+        missing.push(`commands[${index}].measured_exit`);
+      }
+    });
+  }
+  if (missing.length > 0) {
+    throw new Error(`packet is missing required fields: ${missing.join(", ")}`);
+  }
+}
+
+function dig(object, dottedPath) {
+  return dottedPath.split(".").reduce((node, key) => (node == null ? node : node[key]), object);
+}
+
+function isEmpty(value) {
+  return value === undefined || value === null || value === "";
 }
 
 function createRunDir(cwd, experimentId, startedAt) {

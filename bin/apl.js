@@ -65,6 +65,11 @@ async function main() {
       const result = await proveClaim({
         claimPath: parsed.claimPath,
         cwd: process.cwd(),
+        invocation: {
+          argv: process.argv.slice(1),
+          npm_script: process.env.npm_lifecycle_event || null,
+          require_result: parsed.requireResult,
+        },
       });
       process.stdout.write(formatReport(result));
       if (parsed.requireResult && result.runner_result !== parsed.requireResult) {

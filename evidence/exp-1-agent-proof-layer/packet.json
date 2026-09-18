@@ -22,7 +22,8 @@
   "timebox_hours": 8,
   "setup": {
     "repo": "https://github.com/nyfeblade/agent-proof-layer",
-    "branch": "cursor/exp-1-agent-proof-layer-cd66",
+    "branch": "main",
+    "branch_note": "Spike was measured on cursor/exp-1-agent-proof-layer-cd66 (commit e5ea524) before PR 1 merged it to main at 3e559b0; the stranger re-run path is now main, no checkout step.",
     "env": "CloudAgent default + Node 18+",
     "harness_disclosure": "model=cursor-grok-4.6-high-fast; harness=CloudAgent + local node apl prove; no retries on ResourceExhausted"
   },
