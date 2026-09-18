@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "experiment_id": "exp-1-planted-false",
+  "title": "Planted-false: tests passed",
+  "hypothesis": "An agent claimed tests passed.",
+  "rerun": {
+    "command": "node ./bin/apl.js prove claims/planted-false.json --require-result REJECTED",
+    "npm_script": "demo:reject",
+    "cwd": ".",
+    "argv": [
+      "/private/var/folders/l4/mmyv426d6md40x1qyf2982kr0000gn/T/tmp.4eyffBAasE/cold/bin/apl.js",
+      "prove",
+      "claims/planted-false.json",
+      "--require-result",
+      "REJECTED"
+    ]
+  },
+  "command": [
+    {
+      "run": "node fixtures/failing.js",
+      "cwd": ".",
+      "expect_exit": 0,
+      "timeout_s": 30
+    }
+  ],
+  "result": {
+    "observed": {
+      "runner_result": "REJECTED",
+      "measured_exits": [
+        1
+      ]
+    },
+    "logs_uri": "evidence/runs/exp-1-planted-false/2026-09-18T03-27-48-788Z",
+    "wall_ms": 53
+  },
+  "provenance": {
+    "commit": "60b88a4d6b4e6a9123c59bc3f66869616ccedebd",
+    "cloud_agent_id": null,
+    "started_at": "2026-09-18T03:27:48.788Z",
+    "ended_at": "2026-09-18T03:27:48.841Z",
+    "instruments": [
+      "apl prove"
+    ],
+    "node_version": "v24.20.0",
+    "platform": "darwin"
+  },
+  "runner_result": "REJECTED",
+  "verdict": null,
+  "verdict_by": "Eng Proof",
+  "measured": "node fixtures/failing.js: expected 0, measured 1",
+  "commands": [
+    {
+      "run": "node fixtures/failing.js",
+      "cwd": ".",
+      "expect_exit": 0,
+      "timeout_s": 30,
+      "measured_exit": 1,
+      "timed_out": false,
+      "spawn_error": null,
+      "wall_ms": 33,
+      "log_path": "evidence/runs/exp-1-planted-false/2026-09-18T03-27-48-788Z/cmd-0.log"
+    }
+  ],
+  "claim_path": "claims/planted-false.json"
+}

@@ -52,7 +52,7 @@ JSON object:
 
 ## Packet
 
-Each run writes `evidence/runs/<experiment_id>/<timestamp>/packet.json` plus per-command logs. `evidence/runs/` is gitignored — every stranger generates their own; a committed exemplar lives at `evidence/exp-1-agent-proof-layer/spike-run/packet.json`. Experiment-level fields for Eng Proof live in `evidence/exp-1-agent-proof-layer/packet.json`.
+Each run writes `evidence/runs/<experiment_id>/<timestamp>/packet.json` plus per-command logs. `evidence/runs/` is gitignored — every stranger generates their own. A committed exemplar of the current shape lives at `evidence/exp-1-agent-proof-layer/cold-clone-run/packet.json`, measured from a cold clone; `evidence/exp-1-agent-proof-layer/spike-run/packet.json` is the older spike run, kept as-is. Experiment-level fields for Eng Proof live in `evidence/exp-1-agent-proof-layer/packet.json`.
 
 Every packet carries the fields needed to re-run it without asking the author. The runner refuses to write a packet that is missing any of them:
 
